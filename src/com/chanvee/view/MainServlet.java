@@ -33,7 +33,11 @@ public class MainServlet extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
 		out.println("<h1>图书馆管理系统</h1>");
-		out.println("<a href = '/LibManageSystem1.0/LoginServlet'>返回重新登陆</a>");
+		out.println("<h1>请选择您要进行的操作</h1>");
+		out.println("<a href = '/LibManageSystem1.0/ManageUsers'>管理用户</a></br>");
+		out.println("<a href = '/LibManageSystem1.0/LoginServlet'>添加用户</a><br/>");
+		out.println("<a href = '/LibManageSystem1.0/LoginServlet'>查找用户</a><br/>");
+		out.println("<a href = '/LibManageSystem1.0/LoginServlet'>退出系统</a><br/>");
 	}
 
 	/**

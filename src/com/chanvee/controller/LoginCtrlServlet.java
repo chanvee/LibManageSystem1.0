@@ -2,6 +2,10 @@ package com.chanvee.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,8 +39,9 @@ public class LoginCtrlServlet extends HttpServlet {
 		
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		out.println(username + "  " + password);
+		//out.println(username + "  " + password);
 		
+		/*
 		if ("chanvee".equals(username) && "123".equals(password)){
 			// 跳到主界面
 			response.sendRedirect("/LibManageSystem1.0/MainServlet");
@@ -44,7 +49,62 @@ public class LoginCtrlServlet extends HttpServlet {
 		else{
 			//跳回
 			response.sendRedirect("/LibManageSystem1.0/LoginServlet");
+		}*/
+		
+		//数据库验证
+		Connection ct = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			//1.加载驱动
+			Class.forName("com.mysql.jdbc.Driver");
+			//2.得到链接
+			ct = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","");		
+			//3.创建PreparedStatement
+			ps = ct.prepareStatement("select * from users where username=? and password=?");
+			ps.setObject(1, username);
+			ps.setObject(2, password);
+			//4.执行操作
+			rs = ps.executeQuery();
+			//5.根据结果处理
+			if (rs.next()){
+				request.getRequestDispatcher("/MainServlet").forward(request, response);
+			}
+			else{
+				request.setAttribute("err", "用户名或密码错误");
+				request.getRequestDispatcher("/LoginServlet").forward(request, response);;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
 		}
+		finally {
+			if (rs != null){
+				try {
+					rs.close();
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();;
+				}
+			}
+			if (ps != null){
+				try {
+					ps.close();
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();;
+				}
+			}
+			if (ct != null){
+				try {
+					ct.close();
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();;
+				}
+			}
+		}
+		
 	}
 
 	/**

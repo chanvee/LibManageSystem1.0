@@ -39,6 +39,10 @@ public class LoginServlet extends HttpServlet {
 		out.println("ÃÜ    Âë£º<input type='password' name = 'password'/> <br/>");
 		out.println("<input type='submit' value = 'µÇÂ¼'/> <br/>");
 		out.println("</form>");
+		String errInfo = (String) request.getAttribute("err");
+		if (errInfo != null){
+			out.println("<font color = 'red'>"+errInfo+"</font>");
+		}		
 	}
 
 	/**
