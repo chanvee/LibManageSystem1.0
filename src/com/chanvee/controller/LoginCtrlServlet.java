@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.chanvee.domain.User;
+import com.chanvee.service.UserService;
+
 /**
  * Servlet implementation class LoginCtrlServlet
  */
@@ -51,7 +54,8 @@ public class LoginCtrlServlet extends HttpServlet {
 			response.sendRedirect("/LibManageSystem1.0/LoginServlet");
 		}*/
 		
-		//数据库验证
+		//数据库验证1
+		/*
 		Connection ct = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -72,7 +76,7 @@ public class LoginCtrlServlet extends HttpServlet {
 			}
 			else{
 				request.setAttribute("err", "用户名或密码错误");
-				request.getRequestDispatcher("/LoginServlet").forward(request, response);;
+				request.getRequestDispatcher("/LoginServlet").forward(request, response);
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -103,6 +107,19 @@ public class LoginCtrlServlet extends HttpServlet {
 					e.printStackTrace();;
 				}
 			}
+		}*/
+		
+		// 数据库验证2
+		UserService userService = new UserService();
+		User user = new User();
+		user.setName(username);
+		user.setPwd(password);
+		if (userService.checkUser(user)){
+			request.getRequestDispatcher("/MainServlet").forward(request, response);
+		}
+		else{
+			request.setAttribute("err", "用户名或密码错误");
+			request.getRequestDispatcher("/LoginServlet").forward(request, response);
 		}
 		
 	}
