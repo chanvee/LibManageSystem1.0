@@ -32,8 +32,9 @@ public class MainServlet extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
+		out.println("<img src='Images/uestc.jpg'/>欢迎 xx 登录<hr/>");
 		out.println("<h1>图书馆管理系统</h1>");
-		out.println("<h1>请选择您要进行的操作</h1>");
+		out.println("<h3>请选择您要进行的操作</h3>");
 		out.println("<a href = '/LibManageSystem1.0/ManageUsers'>管理用户</a></br>");
 		out.println("<a href = '/LibManageSystem1.0/LoginServlet'>添加用户</a><br/>");
 		out.println("<a href = '/LibManageSystem1.0/LoginServlet'>查找用户</a><br/>");

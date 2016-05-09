@@ -32,6 +32,7 @@ public class LoginServlet extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
+		out.println("<img src='Images/uestc.jpg'/><hr/>");
 		out.println("<h1>用户登录</h1>");
 		out.println("<form action = '/LibManageSystem1.0/LoginCtrlServlet' method = 'post'>");
 		out.println("用户名：<input type='text' name = 'username'/> <br/>");
