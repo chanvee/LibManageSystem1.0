@@ -1,4 +1,4 @@
-package com.chanvee.view;
+package com.chanvee.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,17 +9,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.chanvee.service.UserService;
+
 /**
- * Servlet implementation class MainServlet
+ * Servlet implementation class DelUserCtrlServlet
  */
-@WebServlet("/MainServlet")
-public class MainServlet extends HttpServlet {
+@WebServlet("/DelUserCtrlServlet")
+public class DelUserCtrlServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public MainServlet() {
+    public DelUserCtrlServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,13 +34,13 @@ public class MainServlet extends HttpServlet {
 		response.setContentType("text/html;charset=utf-8");
 		response.setCharacterEncoding("utf-8");
 		PrintWriter out = response.getWriter();
-		out.println("<img src='Images/uestc.jpg'/>欢迎 xx 登录<hr/>");
-		out.println("<h1>图书馆管理系统</h1>");
-		out.println("<h3>请选择您要进行的操作</h3>");
-		out.println("<a href = '/LibManageSystem1.0/ManageUsers'>管理用户</a></br>");
-		out.println("<a href = '/LibManageSystem1.0/UserCtrlServlet?type=gotoAddUser'>添加用户</a><br/>");
-		out.println("<a href = '/LibManageSystem1.0/UserCtrlServlet?type=gotoAccessUser'>查找用户</a><br/>");
-		out.println("<a href = '/LibManageSystem1.0/LoginServlet'>退出系统</a><br/>");
+		// 接受 username
+		String username = request.getParameter("username");
+		if (new UserService().delUser(username)){
+			request.getRequestDispatcher("/OK").forward(request, response);
+		}else{
+			request.getRequestDispatcher("/Error").forward(request, response);
+		}
 	}
 
 	/**
